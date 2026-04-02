@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<robot name="planar_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Link lengths -->
+  <xacro:property name="L1" value="0.4"/>
+  <xacro:property name="L2" value="0.3"/>
+  <xacro:property name="L3" value="0.2"/>
+
+  <!-- Base -->
+  <link name="base_link"/>
+
+  <!-- Link 1 -->
+  <link name="link_1">
+    <visual>
+      <origin xyz="${L1/2} 0 0"/>
+      <geometry>
+        <box size="${L1} 0.05 0.05"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Joint 1 -->
+  <joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="1" velocity="1"/>
+  </joint>
+
+  <!-- Link 2 -->
+  <link name="link_2">
+    <visual>
+      <origin xyz="${L2/2} 0 0"/>
+      <geometry>
+        <box size="${L2} 0.05 0.05"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Joint 2 -->
+  <joint name="joint_2" type="revolute">
+    <parent link="link_1"/>
+    <child link="link_2"/>
+    <origin xyz="${L1} 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="1" velocity="1"/>
+  </joint>
+
+  <!-- Link 3 -->
+  <link name="link_3">
+    <visual>
+      <origin xyz="${L3/2} 0 0"/>
+      <geometry>
+        <box size="${L3} 0.05 0.05"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Joint 3 -->
+  <joint name="joint_3" type="revolute">
+    <parent link="link_2"/>
+    <child link="link_3"/>
+    <origin xyz="${L2} 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="1" velocity="1"/>
+  </joint>
+
+  <!-- End Effector -->
+  <link name="end_effector"/>
+
+  <joint name="ee_joint" type="fixed">
+    <parent link="link_3"/>
+    <child link="end_effector"/>
+    <origin xyz="${L3} 0 0"/>
+  </joint>
+
+</robot>
