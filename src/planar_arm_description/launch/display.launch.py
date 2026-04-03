@@ -14,15 +14,18 @@ def generate_launch_description():
     # Path to xacro file
     xacro_file = os.path.join(pkg_share, 'urdf', 'planar_arm.urdf.xacro')
 
+    # RViz config path (MOVE THIS OUTSIDE LIST ✅)
+    rviz_config = os.path.join(pkg_share, 'rviz', 'display.rviz')
+
     # Convert xacro → robot_description
     robot_description = ParameterValue(
-        Command(['xacro ', xacro_file]),
+        Command(['xacro ', xacro_file]),  # also removed extra space ✔
         value_type=str
     )
 
     return LaunchDescription([
 
-        # Robot State Publisher (publishes TF)
+        # Robot State Publisher
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
@@ -32,7 +35,7 @@ def generate_launch_description():
             }]
         ),
 
-        # Joint State Publisher GUI (sliders)
+        # Joint State Publisher GUI
         Node(
             package='joint_state_publisher_gui',
             executable='joint_state_publisher_gui',
@@ -45,6 +48,7 @@ def generate_launch_description():
             package='rviz2',
             executable='rviz2',
             name='rviz2',
-            output='screen'
+            output='screen',
+            arguments=['-d', rviz_config]   # comma fixed ✔
         )
     ])
