@@ -27,6 +27,7 @@ setup(
     entry_points={
         'console_scripts': ['fk_solver = planar_arm_kinematics.fk_solver:main',
         'ik_solver = planar_arm_kinematics.ik_solver:main',
+        'test_ik_client = planar_arm_kinematics.test_ik_client:main',
         ],
     },
 )
